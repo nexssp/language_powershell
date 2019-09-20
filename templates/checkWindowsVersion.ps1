@@ -1,0 +1,1 @@
+powershell.exe /c "systeminfo" | grep "^OS Version"
