@@ -1,5 +1,5 @@
 let languageConfig = Object.assign({}, require("../config.win32"));
-languageConfig.title = "PHP";
+languageConfig.title = "PowerShell";
 languageConfig.description = "Windows Power Shell script";
 languageConfig.url = "https://www.microsoft.com/";
 languageConfig.extensions = [".ps1"];
