@@ -1,6 +1,6 @@
 # PowerShell implementation for Nexss PROGRAMMER 2.0
 
-Powershell implementation for Nexss Programmer.
+To Install Nexss Programmer please go to [Nexss Programmer CLI](https://github.com/nexssp/cli#readme) for more information.
 
 ## Nexss Programmer Examples
 
