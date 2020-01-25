@@ -1,12 +1,14 @@
 # Nexss PROGRAMMER 2.0.0 - PowerShell
 # Default template for JSON Data
 # STDIN
-$NexssStdin = $input
+[Console]::OutputEncoding = [Text.UTF8Encoding]::UTF8
 
+$NexssStdin = $input
 $NexssStdout = $NexssStdin | ConvertFrom-Json
 
-# Modify Data
-$NexssStdout | Add-Member -NotePropertyMembers @{test = "test" }
 
+
+
+$NexssStdout | Add-Member -Force -NotePropertyMembers  @{test = "test" }
 # STDOUT
-Write-Host (ConvertTo-Json $NexssStdout)
+Write-Host 	(ConvertTo-Json $NexssStdout)
