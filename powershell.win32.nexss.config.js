@@ -7,7 +7,6 @@ languageConfig.builders = {};
 languageConfig.compilers = {
     ps1: {
         install: "installed.",
-        // Cpp does not have possibility to compile and run on the fly. We need to save it as a exe file first.
         command: "PowerShell.exe",
         args: "-ExecutionPolicy ByPass -File <file>",
         help: ``
