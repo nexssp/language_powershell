@@ -1,7 +1,8 @@
 # More here: https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions?view=powershell-5.1
+
 function MyFunction($param) { 
     Write-Host "My Function: $param"
-    Write-Host "@Args: " @Args
+    Write-Host "@Args: " @args
     Write-Host "`$args[0]: " $args[0]
     Write-Host "`$args[1]: " $args[1]
 
@@ -34,3 +35,16 @@ function Get-PipelineInput {
 }
 
 1, 2, 4 | Get-PipelineInput
+
+function Get-Something {
+    [CmdletBinding(DefaultParameterSetName = 'Name')]
+    Param
+    (
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'Name')]
+        [string] $Name,
+        [Parameter(Mandatory = $true, Position = 0, ParameterSetName = 'Id')]
+        [int] $Id
+    )
+}
+
+
