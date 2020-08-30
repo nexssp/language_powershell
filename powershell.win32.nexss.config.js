@@ -8,12 +8,18 @@ languageConfig.years = ["2006"];
 languageConfig.extensions = [".ps1"];
 languageConfig.builders = {};
 languageConfig.compilers = {
-  ps1: {
+  Pwsh: {
+    install: "installed.",
+    command: "Pwsh.exe",
+    args: "-ExecutionPolicy ByPass -File <file>",
+    help: ``,
+  },
+  Powershell: {
     install: "installed.",
     command: "PowerShell.exe",
     args: "-ExecutionPolicy ByPass -File <file>",
-    help: ``
-  }
+    help: ``,
+  },
 };
 languageConfig.errors = require("./nexss.powershell.errors");
 languageConfig.languagePackageManagers = {};
