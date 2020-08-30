@@ -50,3 +50,11 @@ echo $PSScriptRoot # script root
 $filebase = Join-Path $PSScriptRoot $testFilename
 $PSScriptRoot #
 ```
+
+## Combine to Objects
+
+```ps`
+$dockerResult.psobject.Properties | ForEach-Object {
+    $NexssStdout | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
+}
+```
