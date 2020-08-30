@@ -11,6 +11,21 @@ nexss myprogram.js # execute NodeJS
 nexss myprogram.py # execute Python.. etcetc..
 ```
 
+## Use multiple versions of Powershell
+
+To use multiple powershell versions you can add at the top of the file # nexss-compiler tag eg.
+
+### To use Powershell 5
+
+```ps1
+# nexss-compiler:Powershell
+Write-Host "My current Powershell version: "$PSVersionTable.PSVersion.Major
+```
+
+### Other versions of Powershell 6, 7 
+
+It depends what you have installed on your machine it will use it. Remove # nexss-compiler:Powershell as pwsh.exe is default compiler.
+
 ## Installation of latest Version of PowerShell
 
 <https://github.com/PowerShell/PowerShell/blob/master/tools/install-powershell.ps1>
