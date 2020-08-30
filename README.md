@@ -53,7 +53,7 @@ $PSScriptRoot #
 
 ## Combine to Objects
 
-```ps`
+```ps
 $dockerResult.psobject.Properties | ForEach-Object {
     $NexssStdout | Add-Member -MemberType $_.MemberType -Name $_.Name -Value $_.Value -Force
 }
