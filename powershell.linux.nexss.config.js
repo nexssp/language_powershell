@@ -5,7 +5,7 @@ let languageConfig = Object.assign(
 languageConfig.compilers = {
   Pwsh: {
     install: "wget -O - https://aka.ms/install-powershell.sh | sudo bash",
-    command: "Pwsh.exe",
+    command: "pwsh",
     args: "-ExecutionPolicy ByPass -File <file>",
     help: ``,
   },
