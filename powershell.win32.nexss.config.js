@@ -1,4 +1,7 @@
-let languageConfig = Object.assign({}, require("../config.win32"));
+let languageConfig = Object.assign(
+  {},
+  require(`../config.${process.platform}`)
+);
 languageConfig.title = "PowerShell";
 languageConfig.description = "Windows Power Shell script";
 languageConfig.url = "https://www.microsoft.com";
@@ -9,7 +12,7 @@ languageConfig.extensions = [".ps1"];
 languageConfig.builders = {};
 languageConfig.compilers = {
   Pwsh: {
-    install: "installed.",
+    install: `iex "& { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI"`,
     command: "Pwsh.exe",
     args: "-ExecutionPolicy ByPass -File <file>",
     help: ``,
