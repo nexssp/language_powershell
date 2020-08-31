@@ -1,6 +1,6 @@
 let languageConfig = Object.assign(
   {},
-  require(`./powershell.${platform}.nexss.config`)
+  require(`./powershell.${process.platform}.nexss.config`)
 );
 languageConfig.compilers = {
   Pwsh: {
