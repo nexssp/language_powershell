@@ -12,20 +12,19 @@ languageConfig.compilers = {
   },
 };
 languageConfig.errors = require("./nexss.powershell.errors");
-languageConfig.languagePackageManagers = {
-  npm: {
-    installation:
-      "apt-get update && apt-get install curl && curl -s https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer",
-    messageAfterInstallation:
-      "Add to the top of your php file(s): require __DIR__ . '/vendor/autoload.php';", //this message will be displayed after this package manager installation, maybe some action needed etc.
-    installed: "composer installed",
-    search: "composer search",
-    install: "composer require",
-    uninstall: "composer remove",
-    help: "composer",
-    version: "composer version",
-    init: () => {},
-  },
-};
+
+// If statement must be here for older versions nexss <2.1.12
+if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
+  const {
+    replaceCommandByDist,
+  } = require(`${process.env.NEXSS_SRC_PATH}/lib/osys`);
+
+  // This function just replace all apt-get,apt to the right distribution pkg installer.
+  languageConfig.compilers.Pwsh.install = replaceCommandByDist(
+    languageConfig.compilers.Pwsh.install
+  );
+
+  languageConfig.dist = distName;
+}
 
 module.exports = languageConfig;
