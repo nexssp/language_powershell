@@ -17,6 +17,7 @@ languageConfig.errors = require("./nexss.powershell.errors");
 if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
   const {
     replaceCommandByDist,
+    dist,
   } = require(`${process.env.NEXSS_SRC_PATH}/lib/osys`);
 
   // This function just replace all apt-get,apt to the right distribution pkg installer.
@@ -24,7 +25,7 @@ if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
     languageConfig.compilers.Pwsh.install
   );
 
-  languageConfig.dist = distName;
+  languageConfig.dist = dist();
 }
 
 module.exports = languageConfig;
