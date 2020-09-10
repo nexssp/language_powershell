@@ -22,14 +22,14 @@ if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
   const distName = dist();
   switch (distName) {
     case "Arch Linux":
-      languageConfig.compilers.Pwsh.install = `wget https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz
-pacman -Syy 
-pacman -S --noconfirm core/icu openssl-1.0
-installFolder="/usr/src/powershell-7"
+      languageConfig.compilers.Pwsh.install = `pacman -Syy
+pacman -S --noconfirm core/icu openssl-1.0 wget
+wget https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz
+ installFolder="/usr/src/powershell-7"
 mkdir -p "$installFolder"
 tar zxf powershell-7.0.3-linux-x64.tar.gz -C "$installFolder"
-rm -f /tmp/powershell*.tar.gz
-ln -s $installFolder/pwsh /usr/bin/pwsh
+rm -f ./powershell*.tar.gz
+ln -s ${installFolder}/pwsh /usr/bin/pwsh
 pacman -Scc`;
       break;
     default:
