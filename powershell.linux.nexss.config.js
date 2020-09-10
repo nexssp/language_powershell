@@ -29,7 +29,7 @@ wget https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershel
 mkdir -p "$installFolder"
 tar zxf powershell-7.0.3-linux-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
-ln -s ${installFolder}/pwsh /usr/bin/pwsh
+ln -s "$installFolder"/pwsh /usr/bin/pwsh
 pacman -Scc`;
       break;
     default:
