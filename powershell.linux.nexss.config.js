@@ -29,7 +29,7 @@ installFolder="/usr/src/powershell-7"
 mkdir -p "$installFolder"
 tar zxf powershell-7.0.3-linux-x64.tar.gz -C "$installFolder"
 rm -f /tmp/powershell*.tar.gz
-ln -s ${installFolder}/pwsh /usr/bin/pwsh
+ln -s $installFolder/pwsh /usr/bin/pwsh
 pacman -Scc`;
       break;
     default:
