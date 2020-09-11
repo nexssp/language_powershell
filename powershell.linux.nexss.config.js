@@ -18,7 +18,7 @@ languageConfig.compilers = {
 };
 languageConfig.errors = require("./nexss.powershell.errors");
 
-const  getPowershellInstaller = (pre, post, version = "7.0.3") => {
+const getPowershellInstaller = (pre, post, version = "7.0.3") => {
   return `${pre} core/icu openssl-1.0 wget
 wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-x64.tar.gz
 installFolder="/usr/src/powershell"
@@ -27,9 +27,7 @@ tar zxf powershell-${version}-linux-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
 ln -s "$installFolder"/pwsh /usr/bin/pwsh
 ${post}`;
-}
-
-const powershellInstall = 
+};
 
 // If statement must be here for older versions nexss <2.1.12
 if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
@@ -39,15 +37,21 @@ if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
   } = require(`${process.env.NEXSS_SRC_PATH}/lib/osys`);
   const distName = dist();
 
-  
-
   switch (distName) {
     case "Arch Linux":
-      languageConfig.compilers.Pwsh.install = getPowershellInstaller(`${sudo}pacman -Syy
-${sudo}pacman -S --noconfirm`,`${sudo}pacman -Scc`,"7.0.3");
+      languageConfig.compilers.Pwsh.install = getPowershellInstaller(
+        `${sudo}pacman -Syy
+${sudo}pacman -S --noconfirm`,
+        `${sudo}pacman -Scc`,
+        "7.0.3"
+      );
     case "Alpine Linux":
-      languageConfig.compilers.Pwsh.install = getPowershellInstaller(`${sudo}apt-get update
-${sudo}apt-get install -y`,`${sudo}apt-get autoremove`,"7.0.3");
+      languageConfig.compilers.Pwsh.install = getPowershellInstaller(
+        `${sudo}apt-get update
+${sudo}apt-get install -y`,
+        `${sudo}apt-get autoremove`,
+        "7.0.3"
+      );
       break;
     default:
       languageConfig.compilers.Pwsh.install = replaceCommandByDist(
