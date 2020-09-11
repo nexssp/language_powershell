@@ -46,12 +46,33 @@ ${sudo}pacman -S --noconfirm`,
         "7.0.3"
       );
     case "Alpine Linux":
-      languageConfig.compilers.Pwsh.install = getPowershellInstaller(
-        `${sudo}apk update
-${sudo}apk add -y`,
-        "",
-        "7.0.3"
-      );
+      let version = "7.0.3";
+      languageConfig.compilers.Pwsh.install = `${sudo}apk update
+${sudo}apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl1.1 libstdc++ tzdata userspace-rcu zlib icu-libs curl
+wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-alpine-x64.tar.gz
+installFolder="/usr/src/powershell"
+mkdir -p "$installFolder"
+tar zxf powershell-${version}-linux*-x64.tar.gz -C "$installFolder"
+rm -f ./powershell*.tar.gz
+ln -s "$installFolder"/pwsh /usr/bin/pwsh
+${post}`;
+      break;
+    case "Oracle":
+    case "Oracle Linux Server":
+    case "CentOS Linux":
+      languageConfig.compilers.Pwsh.install = `curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo} tee /etc/yum.repos.d/microsoft.repo
+${sudo}yum install -y powershell`;
+      break;
+    case "RHEL Linux":
+      languageConfig.compilers.Pwsh.install = `curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo} tee /etc/yum.repos.d/microsoft.repo
+${sudo}yum install -y powershell`;
+      break;
+    case "Fedora Linux":
+      languageConfig.compilers.Pwsh.install = `${sudo} rpm --import https://packages.microsoft.com/keys/microsoft.asc
+curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo} tee /etc/yum.repos.d/microsoft.repo
+${sudo} dnf check-update
+${sudo} dnf install compat-openssl10
+${sudo} dnf install -y powershell`;
       break;
     default:
       languageConfig.compilers.Pwsh.install = replaceCommandByDist(
