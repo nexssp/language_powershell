@@ -47,9 +47,9 @@ ${sudo}pacman -S --noconfirm`,
       );
     case "Alpine Linux":
       languageConfig.compilers.Pwsh.install = getPowershellInstaller(
-        `${sudo}apt-get update
-${sudo}apt-get install -y`,
-        `${sudo}apt-get autoremove`,
+        `${sudo}apk update
+${sudo}apk add -y`,
+        "",
         "7.0.3"
       );
       break;
