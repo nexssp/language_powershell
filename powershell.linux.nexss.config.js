@@ -54,8 +54,7 @@ installFolder="/usr/src/powershell"
 mkdir -p "$installFolder"
 tar zxf powershell-${version}-linux*-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
-ln -s "$installFolder"/pwsh /usr/bin/pwsh
-${post}`;
+ln -s "$installFolder"/pwsh /usr/bin/pwsh`;
       break;
     case "Oracle":
     case "Oracle Linux Server":
