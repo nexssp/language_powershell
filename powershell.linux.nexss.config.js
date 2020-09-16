@@ -19,7 +19,7 @@ languageConfig.compilers = {
 languageConfig.errors = require("./nexss.powershell.errors");
 
 const getPowershellInstaller = (pre, post, version = "7.0.3") => {
-  return `${pre} core/icu openssl-1.0 wget
+  return `${pre} wget
 wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-x64.tar.gz
 installFolder="/usr/src/powershell"
 mkdir -p "$installFolder"
@@ -41,10 +41,11 @@ if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
     case "Arch Linux":
       languageConfig.compilers.Pwsh.install = getPowershellInstaller(
         `${sudo}pacman -Syy
-${sudo}pacman -S --noconfirm`,
-        `${sudo}pacman -Scc`,
+${sudo}pacman -S --noconfirm core/icu `,
+        `${sudo}pacman -Scc --noconfirm`,
         "7.0.3"
       );
+      break;
     case "Alpine Linux":
       let version = "7.0.3";
       languageConfig.compilers.Pwsh.install = `${sudo}apk update
@@ -66,22 +67,35 @@ ${sudo}yum install -y powershell`;
       languageConfig.compilers.Pwsh.install = `curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo} tee /etc/yum.repos.d/microsoft.repo
 ${sudo}yum install -y powershell`;
       break;
-    case "Fedora Linux":
+    case "Fedora":
       languageConfig.compilers.Pwsh.install = `${sudo} rpm --import https://packages.microsoft.com/keys/microsoft.asc
 curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo} tee /etc/yum.repos.d/microsoft.repo
 ${sudo} dnf check-update
 ${sudo} dnf install compat-openssl10
 ${sudo} dnf install -y powershell`;
       break;
+    case "openSUSE Leap":
+    case "openSUSE Tumbleweed":
+      languageConfig.compilers.Pwsh.install = `${sudo}zypper update
+${sudo}zypper --non-interactive install curl tar gzip libopenssl1_0_0 libicu67
+${sudo}curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz -o /tmp/powershell.tar.gz
+${sudo}mkdir -p /opt/microsoft/powershell/7
+${sudo}tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
+${sudo}chmod +x /opt/microsoft/powershell/7/pwsh
+${sudo}ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
+      break;
     default:
-      languageConfig.compilers.Pwsh.install = replaceCommandByDist(
-        languageConfig.compilers.Pwsh.install
+      languageConfig.compilers.Pwsh.install = getPowershellInstaller(
+        `${sudo}apt-get update -y
+${sudo}apt-get install -y libicu60`,
+        `${sudo}apt-get autoremove`,
+        "7.0.3"
       );
       break;
   }
   // This function just replace all apt-get,apt to the right distribution pkg installer.
 
-  languageConfig.dist = dist();
+  languageConfig.dist = distName;
 }
 
 module.exports = languageConfig;
