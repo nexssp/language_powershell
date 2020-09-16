@@ -77,7 +77,7 @@ ${sudo} dnf install -y powershell`;
     case "openSUSE Leap":
     case "openSUSE Tumbleweed":
       languageConfig.compilers.Pwsh.install = `${sudo}zypper update
-${sudo}zypper --non-interactive install curl tar gzip libopenssl1_0_0 libicu67
+${sudo}zypper --non-interactive install curl tar gzip libopenssl1_0_0 libicu
 ${sudo}curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz -o /tmp/powershell.tar.gz
 ${sudo}mkdir -p /opt/microsoft/powershell/7
 ${sudo}tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
