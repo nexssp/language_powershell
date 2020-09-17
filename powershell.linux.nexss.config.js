@@ -84,12 +84,22 @@ ${sudo}tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 ${sudo}chmod +x /opt/microsoft/powershell/7/pwsh
 ${sudo}ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
       break;
+    case "Linux Mint":
+      languageConfig.compilers.Pwsh.install = replaceCommandByDist(
+        getPowershellInstaller(
+          `${sudo}apt-get update -y
+${sudo}apt-get install -y libicu60 tar`,
+          `${sudo}apt-get autoremove`, // Later to implement cleanups `${sudo}apt-get autoremove`
+          "7.0.3"
+        )
+      );
+      break;
     default:
       languageConfig.compilers.Pwsh.install = replaceCommandByDist(
         getPowershellInstaller(
           `${sudo}apt-get update -y
 ${sudo}apt-get install -y libicu tar`,
-          null, // Later to implement cleanups `${sudo}apt-get autoremove`
+          "", // Later to implement cleanups `${sudo}apt-get autoremove`
           "7.0.3"
         )
       );
