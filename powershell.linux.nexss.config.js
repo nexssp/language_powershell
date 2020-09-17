@@ -10,7 +10,7 @@ if (process.getuid && process.getuid() === 0) {
 
 languageConfig.compilers = {
   Pwsh: {
-    install: `${sudo}apt install -y wget && wget -O - https://aka.ms/install-powershell.sh | ${sudo}bash`,
+    install: `${sudo}apt install -y wget tar && wget -O - https://aka.ms/install-powershell.sh | ${sudo}bash`,
     command: "pwsh",
     args: "-ExecutionPolicy ByPass -File <file>",
     help: ``,
@@ -41,7 +41,7 @@ if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
     case "Arch Linux":
       languageConfig.compilers.Pwsh.install = getPowershellInstaller(
         `${sudo}pacman -Syy
-${sudo}pacman -S --noconfirm core/icu `,
+${sudo}pacman -S --noconfirm core/icu tar`,
         `${sudo}pacman -Scc --noconfirm`,
         "7.0.3"
       );
@@ -49,7 +49,7 @@ ${sudo}pacman -S --noconfirm core/icu `,
     case "Alpine Linux":
       let version = "7.0.3";
       languageConfig.compilers.Pwsh.install = `${sudo}apk update
-${sudo}apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl1.1 libstdc++ tzdata userspace-rcu zlib icu-libs curl
+${sudo}apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl1.1 libstdc++ tzdata userspace-rcu zlib icu-libs curl tar
 wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-alpine-x64.tar.gz
 installFolder="/usr/src/powershell"
 mkdir -p "$installFolder"
@@ -85,11 +85,13 @@ ${sudo}chmod +x /opt/microsoft/powershell/7/pwsh
 ${sudo}ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
       break;
     default:
-      languageConfig.compilers.Pwsh.install = getPowershellInstaller(
-        `${sudo}apt-get update -y
-${sudo}apt-get install -y libicu60`,
-        `${sudo}apt-get autoremove`,
-        "7.0.3"
+      languageConfig.compilers.Pwsh.install = replaceCommandByDist(
+        getPowershellInstaller(
+          `${sudo}apt-get update -y
+${sudo}apt-get install -y libicu tar`,
+          null, // Later to implement cleanups `${sudo}apt-get autoremove`
+          "7.0.3"
+        )
       );
       break;
   }
