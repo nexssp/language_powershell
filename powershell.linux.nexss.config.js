@@ -25,8 +25,7 @@ installFolder="/usr/src/powershell"
 mkdir -p "$installFolder"
 tar zxf powershell-${version}-linux-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
-ln -s "$installFolder"/pwsh /usr/bin/pwsh
-${post}`;
+ln -s "$installFolder"/pwsh /usr/bin/pwsh${post ? `\n${post}` : ""}`;
 };
 
 // If statement must be here for older versions nexss <2.1.12
@@ -84,20 +83,11 @@ ${sudo}chmod +x /opt/microsoft/powershell/7/pwsh
 ${sudo}ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
       break;
     case "Linux Mint":
-      languageConfig.compilers.Pwsh.install = replaceCommandByDist(
-        getPowershellInstaller(
-          `${sudo}apt-get update -y
-${sudo}apt-get install -y libicu60 tar`,
-          `${sudo}apt-get autoremove`, // Later to implement cleanups `${sudo}apt-get autoremove`
-          "7.0.3"
-        )
-      );
-      break;
     default:
       languageConfig.compilers.Pwsh.install = replaceCommandByDist(
         getPowershellInstaller(
           `${sudo}apt-get update -y
-${sudo}apt-get install -y libicu tar`,
+${sudo}apt-get install -y libicu?? tar`,
           "", // Later to implement cleanups `${sudo}apt-get autoremove`
           "7.0.3"
         )
