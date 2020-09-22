@@ -68,11 +68,11 @@ ${sudo}yum install -y powershell`;
 ${sudo}yum install -y powershell`;
       break;
     case "Fedora":
-      languageConfig.compilers.Pwsh.install = `${sudo} rpm --import https://packages.microsoft.com/keys/microsoft.asc
-curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo} tee /etc/yum.repos.d/microsoft.repo
-${sudo} dnf check-update
-${sudo} dnf install compat-openssl10
-${sudo} dnf install -y powershell`;
+      languageConfig.compilers.Pwsh.install = `${sudo}rpm --import https://packages.microsoft.com/keys/microsoft.asc
+curl https://packages.microsoft.com/config/rhel/7/prod.repo | ${sudo}tee /etc/yum.repos.d/microsoft.repo
+${sudo}dnf check-update
+${sudo}dnf install -y compat-openssl10
+${sudo}dnf install -y powershell`;
       break;
     case "openSUSE Leap":
     case "openSUSE Tumbleweed":
