@@ -25,7 +25,7 @@ installFolder="/usr/src/powershell"
 mkdir -p "$installFolder"
 tar zxf powershell-${version}-linux-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
-ln -s "$installFolder"/pwsh /usr/bin/pwsh${post ? `\n${post}` : ""}`;
+ln -sf "$installFolder"/pwsh /usr/bin/pwsh${post ? `\n${post}` : ""}`;
 };
 
 // If statement must be here for older versions nexss <2.1.12
@@ -37,6 +37,14 @@ if (require("fs").existsSync(`${process.env.NEXSS_SRC_PATH}/lib/osys.js`)) {
   const distName = dist();
 
   switch (distName) {
+    case "Amazon Linux":
+      languageConfig.compilers.Pwsh.install = getPowershellInstaller(
+        `${sudo}yum update -y
+${sudo}yum install -y icu tar`,
+        ``,
+        "7.0.3"
+      );
+      break;
     case "Arch Linux":
       languageConfig.compilers.Pwsh.install = getPowershellInstaller(
         `${sudo}pacman -Syy
@@ -54,7 +62,7 @@ installFolder="/usr/src/powershell"
 mkdir -p "$installFolder"
 tar zxf powershell-${version}-linux*-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
-ln -s "$installFolder"/pwsh /usr/bin/pwsh`;
+ln -sf "$installFolder"/pwsh /usr/bin/pwsh`;
       break;
     case "Oracle":
     case "Oracle Linux Server":
@@ -80,7 +88,7 @@ ${sudo}curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.0.3
 ${sudo}mkdir -p /opt/microsoft/powershell/7
 ${sudo}tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 ${sudo}chmod +x /opt/microsoft/powershell/7/pwsh
-${sudo}ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
+${sudo}ln -sf /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
       break;
     case "Linux Mint":
     default:
