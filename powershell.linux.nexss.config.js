@@ -22,10 +22,10 @@ const getPowershellInstaller = (pre, post, version = "7.0.3") => {
   return `${pre} wget
 wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-x64.tar.gz
 installFolder="/usr/src/powershell"
-mkdir -p "$installFolder"
-tar zxf powershell-${version}-linux-x64.tar.gz -C "$installFolder"
+${sudo} mkdir -p "$installFolder"
+${sudo} tar zxf powershell-${version}-linux-x64.tar.gz -C "$installFolder"
 rm -f ./powershell*.tar.gz
-ln -sf "$installFolder"/pwsh /usr/bin/pwsh${post ? `\n${post}` : ""}`;
+${sudo} ln -sf "$installFolder"/pwsh /usr/bin/pwsh${post ? `\n${post}` : ""}`;
 };
 
 // If statement must be here for older versions nexss <2.1.12
