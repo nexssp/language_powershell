@@ -15,7 +15,7 @@ languageConfig.compilers = {
 };
 languageConfig.errors = require("./nexss.powershell.errors");
 
-const getPowershellInstaller = (pre, post, version = "7.0.3") => {
+const getPowershellInstaller = (pre, post, version = "7.1.3") => {
   return `${pre} wget
 wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-x64.tar.gz
 installFolder="/usr/src/powershell"
@@ -33,10 +33,11 @@ switch (distName) {
   case process.distros.AMAZON:
   case process.distros.AMAZON_AMI:
     languageConfig.compilers.Pwsh.install = getPowershellInstaller(
-      `${sudo}yum update -y
-${sudo}yum install -y icu tar`,
+      `${sudo}yum remove gcc -y
+${sudo}yum update -y
+${sudo}yum install -y gcc72-c++ icu tar`,
       ``,
-      "7.0.3"
+      "7.1.3"
     );
     break;
   case process.distros.ARCH:
@@ -44,11 +45,11 @@ ${sudo}yum install -y icu tar`,
       `${sudo}pacman -Syy
 ${sudo}pacman -S --noconfirm core/icu tar`,
       `${sudo}pacman -Scc --noconfirm`,
-      "7.0.3"
+      "7.1.3"
     );
     break;
   case process.distros.ALPINE:
-    let version = "7.0.3";
+    let version = "7.1.3";
     languageConfig.compilers.Pwsh.install = `${sudo}apk update
 ${sudo}apk add --no-cache ca-certificates less ncurses-terminfo-base krb5-libs libgcc libintl libssl1.1 libstdc++ tzdata userspace-rcu zlib icu-libs curl tar
 wget https://github.com/PowerShell/PowerShell/releases/download/v${version}/powershell-${version}-linux-alpine-x64.tar.gz
@@ -77,7 +78,7 @@ ${sudo}dnf install -y powershell`;
   case process.distros.SUSE_TUMBLEWEED:
     languageConfig.compilers.Pwsh.install = `${sudo}zypper update
 ${sudo}zypper --non-interactive install curl tar gzip libopenssl1_0_0 libicu
-${sudo}curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.0.3/powershell-7.0.3-linux-x64.tar.gz -o /tmp/powershell.tar.gz
+${sudo}curl -L https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/powershell-7.1.3-linux-x64.tar.gz -o /tmp/powershell.tar.gz
 ${sudo}mkdir -p /opt/microsoft/powershell/7
 ${sudo}tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7
 ${sudo}chmod +x /opt/microsoft/powershell/7/pwsh
@@ -90,7 +91,7 @@ ${sudo}ln -sf /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh`;
         `${sudo}apt-get update -y
 ${sudo}apt-get install -y libicu?? tar`,
         "", // Later to implement cleanups `${sudo}apt-get autoremove`
-        "7.0.3"
+        "7.1.3"
       )
     );
     break;
