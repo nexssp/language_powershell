@@ -12,4 +12,4 @@ $NexssStdout | Add-Member -Force -NotePropertyMembers @{PowerShellOutput = "Outp
 
 
 # STDOUT
-Write-Host (ConvertTo-Json -Compress $NexssStdout)
+Write-Host (ConvertTo-Json -Depth 9 -Compress $NexssStdout)
