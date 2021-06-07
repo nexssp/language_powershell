@@ -12,7 +12,7 @@ languageConfig.extensions = [".ps1"];
 languageConfig.builders = {};
 languageConfig.compilers = {
   Pwsh: {
-    install: `iex "& { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI"`,
+    install: `scoop install pwsh`,
     command: "Pwsh.exe",
     args: "-ExecutionPolicy ByPass -File <file>",
     help: ``,
